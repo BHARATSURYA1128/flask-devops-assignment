@@ -18,4 +18,4 @@ jobs:
     - name: Build and Push Docker image
       run: |
         docker build -t bharatsurya1128/flask-devops-assignment:latest .
-        docker push bharatsurya/flask-devops-assignment:latest
+        docker push bharatsurya1128/flask-devops-assignment:latest
