@@ -1,85 +1,141 @@
-\# 🚀 Flask DevOps Assignment -- DevOps CI/CD + Kubernetes
+# Flask DevOps Assignment
 
-This project is a complete DevOps assignment implementation involving:
+This project demonstrates a complete DevOps workflow, encompassing containerization with Docker, CI/CD pipelines via GitHub Actions and CircleCI, and deployment to Kubernetes.
 
-\- A Flask web application - Docker containerization - CI/CD using
-GitHub Actions and CircleCI - Kubernetes deployment using Minikube -
-Monitoring integration with Datadog
+## Key Features & Benefits
 
-\> ✅ Goal: Demonstrate a full CI/CD pipeline and deployment workflow
-from local dev to Kubernetes using free and open tools.
+*   **Dockerized Flask Application:**  Ensures consistency across different environments.
+*   **CI/CD Pipeline:** Automated build, test, and deployment processes.
+*   **Kubernetes Deployment:** Scalable and resilient deployment using Kubernetes.
+*   **GitHub Actions Integration:** Automates workflow tasks directly within GitHub.
+*   **CircleCI Integration:** Alternative CI/CD pipeline for enhanced flexibility.
+*   **Simple Web Application:** Easily extendable for more complex features.
 
-\-\--
+## Prerequisites & Dependencies
 
-\## 📁 Project Structure
+Before you begin, ensure you have the following installed:
 
-\`\`\`bash better-flask-assignment/ ├── app.py \# Flask web app ├──
-requirements.txt \# Python dependencies ├── Dockerfile \# Image build
-instructions ├── .github/workflows/ \# GitHub Actions workflow ├──
-.circleci/config.yml \# CircleCI pipeline └── k8s/ \# Kubernetes
-manifests ├── deployment.yaml └── service.yaml 🔧
+*   **Python 3.6+:** The core language for the Flask application.
+*   **Docker:**  For containerizing the application.  Download from [Docker Hub](https://www.docker.com/).
+*   **kubectl:**  The Kubernetes command-line tool.  Install as per the [Kubernetes documentation](https://kubernetes.io/docs/tasks/tools/).
+*   **Minikube (Optional):** For local Kubernetes development.  Get it from [Minikube's website](https://minikube.sigs.k8s.io/docs/start/).
+*   **GitHub Account:** Required for GitHub Actions.
+*   **CircleCI Account (Optional):**  Required for CircleCI integration.
+
+## Installation & Setup Instructions
+
+1.  **Clone the Repository:**
+
+    ```bash
+    git clone https://github.com/BHARATSURYA1128/flask-devops-assignment.git
+    cd flask-devops-assignment
+    ```
+
+2.  **Create a Virtual Environment (Recommended):**
+
+    ```bash
+    python3 -m venv venv
+    source venv/bin/activate  # On Linux/macOS
+    # venv\Scripts\activate  # On Windows
+    ```
+
+3.  **Install Dependencies:**
+
+    ```bash
+    pip install -r requirements.txt
+    ```
+
+## Usage Examples
+
+### Running the Application Locally
+
+```bash
+python app.py
+```
+
+Navigate to `http://0.0.0.0:5000` in your web browser to see the "Hello from Flask on Kubernetes via Docker Hub !" message.
+
+### Building and Running the Docker Image
+
+1.  **Build the Docker Image:**
+
+    ```bash
+    docker build -t flask-app .
+    ```
+
+2.  **Run the Docker Container:**
+
+    ```bash
+    docker run -p 5000:5000 flask-app
+    ```
+
+Access the application at `http://localhost:5000`.
+
+### Deploying to Kubernetes (using Minikube)
+
+1.  **Start Minikube:**
+
+    ```bash
+    minikube start
+    ```
+
+2.  **Apply the Kubernetes Deployment and Service:**
+
+    ```bash
+    kubectl apply -f k8s/deployment.yaml
+    kubectl apply -f k8s/service.yaml
+    ```
+
+3.  **Access the Service:**
+
+    Find the service URL:
+
+    ```bash
+    minikube service flask-service --url
+    ```
+
+    Open the provided URL in your browser.
+
+## Configuration Options
+
+*   **Port:** The Flask application runs on port 5000 by default. You can change this in the `app.py` file.
+
+*   **Environment Variables:**  You can use environment variables to configure the application further.  For example, you could set a `FLASK_ENV` variable for different environments.  These would be defined in your Kubernetes deployment YAML.
+
+## Project Structure
+
+```
+├── .circleci               # CircleCI configuration files
+│   └── config.yml         # CircleCI pipeline definition
+├── .github                # GitHub Actions workflow directory
+│   └── workflows          # Contains workflow files
+│       └── main.yml      # GitHub Actions CI/CD workflow
+├── Dockerfile             # Dockerfile for building the application image
+├── README.md              # This README file
+├── app.py                 # The main Flask application file
+├── k8s                    # Kubernetes deployment files
+│   ├── deployment.yaml   # Kubernetes deployment configuration
+│   └── service.yaml      # Kubernetes service configuration
+└── requirements.txt       # Python dependencies
+```
+
+## GitHub Actions Workflow
+
+The `.github/workflows/main.yml` file defines the CI/CD pipeline that automates the build, test, and deployment of the application.  It is triggered on pushes to the `main` branch.
+
+## CircleCI Configuration
+
+The `.circleci/config.yml` file defines an alternative CI/CD pipeline using CircleCI.
 
 
-What I Built 🐍 Flask
-Application A simple Flask server with basic routes, including a /crash
-route intended for error tracking (planned for Bugsnag).
 
-🐳 Docker & Docker Hub Created a Dockerfile to containerize the Flask
-app
+## License Information
 
-Built and pushed the image to Docker Hub
+This project has no specified license. All rights are reserved by the owner.
 
-bash Copy Edit docker build -t \<your-username\>/better-flask-assignment
-. docker push \<your-username\>/better-flask-assignment ⚙️ CI/CD
-Pipeline GitHub Actions: Lint and test the Flask app on every push
+## Acknowledgments
 
-CircleCI: Build the Docker image and push it to Docker Hub
-
-Faced challenges with Docker version compatibility on CircleCI, resolved
-by updating the executor and simplifying the config.
-
-☸️ Kubernetes with Minikube Used Minikube for a local Kubernetes cluster
-
-Wrote Deployment and Service manifests
-
-Deployed the app with:
-
-bash Copy Edit kubectl apply -f k8s/ kubectl get pods kubectl
-port-forward svc/flask-app 5000:5000 Tested locally at:
-http://localhost:5000
-
-📊 Monitoring with Datadog Installed the Datadog Agent with Helm
-
-Configured to Japan region (datadoghq.jp)
-
-Verified node, pod, and cluster metrics in the Datadog dashboard
-
-❌ What Didn\'t Work Intended to integrate Bugsnag for error tracking
-using the /crash route
-
-Couldn't complete Bugsnag setup due to time constraints
-
-✅ What I Learned How to set up CI/CD workflows using GitHub Actions and
-CircleCI
-
-Troubleshooting Docker build failures in CI environments
-
-Creating Kubernetes manifests and running local clusters with Minikube
-
-How to configure and verify observability with Datadog
-
-Real-world debugging of pipeline errors and container issues
-
-🪛 Future Improvements Complete Bugsnag integration for Flask error
-tracking
-
-Replace Minikube with a managed Kubernetes provider (GKE, EKS)
-
-Add Helm chart packaging for easier deployment
-
-Configure Horizontal Pod Autoscaling
-
-Enable full Datadog APM and logs
-
-🙌 Thanks Thanks for reviewing this project! Please feel free to ask me
-more about any step, error, or decision I made during this assignment.
+*   Flask - For providing the web framework.
+*   Docker - For containerization technology.
+*   Kubernetes - For container orchestration.
+*   GitHub Actions and CircleCI - For CI/CD automation.
